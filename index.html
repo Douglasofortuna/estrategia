@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estratégia Meta Ads — Clínica Eccellenza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e0f;
+    --bg-2: #161618;
+    --bg-3: #1d1d20;
+    --bg-4: #252528;
+    --border: rgba(255,255,255,0.07);
+    --border-mid: rgba(255,255,255,0.12);
+    --text: #f0ede8;
+    --text-2: #a09c96;
+    --text-3: #6b6864;
+
+    --g-accent: #4fa3c8;
+    --g-accent-dim: rgba(79,163,200,0.12);
+    --g-accent-mid: rgba(79,163,200,0.25);
+
+    --s-accent: #c87a8a;
+    --s-accent-dim: rgba(200,122,138,0.12);
+    --s-accent-mid: rgba(200,122,138,0.25);
+
+    --active-accent: var(--g-accent);
+    --active-dim: var(--g-accent-dim);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    padding: 3rem 0 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 200px;
+    background: radial-gradient(ellipse, rgba(79,163,200,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .clinic-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.75rem;
+  }
+  .site-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .site-subtitle {
+    margin-top: 0.75rem;
+    font-size: 13px;
+    color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+
+  /* TABS */
+  .tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 2rem 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    padding: 1rem 2.5rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    transition: color 0.25s, border-color 0.25s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text-2); }
+  .tab-btn.active-g { color: var(--g-accent); border-bottom-color: var(--g-accent); }
+  .tab-btn.active-s { color: var(--s-accent); border-bottom-color: var(--s-accent); }
+
+  /* TAB CONTENT */
+  .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* LAYOUT */
+  .container { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem; }
+
+  /* DOCTOR HERO */
+  .doc-hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2.5rem;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+  .doc-hero-g::before { background: var(--g-accent); }
+  .doc-hero-s::before { background: var(--s-accent); }
+  .doc-avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .doc-avatar-g { background: var(--g-accent-dim); color: var(--g-accent); border: 1px solid var(--g-accent-mid); }
+  .doc-avatar-s { background: var(--s-accent-dim); color: var(--s-accent); border: 1px solid var(--s-accent-mid); }
+  .doc-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
+  .doc-spec { font-size: 12px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+  .tag-g { background: var(--g-accent-dim); color: var(--g-accent); border: 1px solid var(--g-accent-mid); }
+  .tag-s { background: var(--s-accent-dim); color: var(--s-accent); border: 1px solid var(--s-accent-mid); }
+  .tag-neutral { background: var(--bg-4); color: var(--text-3); border: 1px solid var(--border-mid); }
+
+  /* ALERT */
+  .alert {
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .alert-g { background: var(--g-accent-dim); border-left: 3px solid var(--g-accent); color: #a8d8ed; }
+  .alert-s { background: var(--s-accent-dim); border-left: 3px solid var(--s-accent); color: #e5b3bc; }
+  .alert-amber { background: rgba(200,160,80,0.1); border-left: 3px solid #c8a050; color: #d4b57a; }
+
+  /* SECTION */
+  .section { margin-bottom: 2.5rem; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* METRICS ROW */
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .metric {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .metric-label { font-size: 11px; color: var(--text-3); margin-bottom: 4px; }
+  .metric-value { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; line-height: 1; margin-bottom: 4px; }
+  .metric-note { font-size: 11px; color: var(--text-3); }
+  .metric-value-g { color: var(--g-accent); }
+  .metric-value-s { color: var(--s-accent); }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 1.5rem; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .card-sub { font-size: 12px; color: var(--text-3); margin-bottom: 12px; line-height: 1.5; }
+  .card-g { border-left: 2px solid var(--g-accent); }
+  .card-s { border-left: 2px solid var(--s-accent); }
+
+  /* CHECKS */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .check-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .dot-g { background: var(--g-accent); }
+  .dot-s { background: var(--s-accent); }
+  .dot-blue { background: #6a9fd4; }
+  .dot-neutral { background: var(--text-3); }
+
+  /* FUNNEL */
+  .funnel { display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem; }
+  .funnel-item { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: start; }
+  .funnel-pill {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+    text-align: center; padding: 8px 4px;
+    border-radius: 8px; text-transform: uppercase; line-height: 1.4;
+  }
+  .pill-tofu { background: rgba(79,163,200,0.1); color: var(--g-accent); border: 1px solid var(--g-accent-mid); }
+  .pill-mofu { background: rgba(160,120,200,0.1); color: #b89fd4; border: 1px solid rgba(160,120,200,0.25); }
+  .pill-bofu { background: rgba(80,180,140,0.1); color: #6ac4a0; border: 1px solid rgba(80,180,140,0.25); }
+  .pill-tofu-s { background: rgba(200,122,138,0.1); color: var(--s-accent); border: 1px solid var(--s-accent-mid); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    text-align: left; padding: 10px 14px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-3);
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr { background: var(--bg-2); }
+  tbody tr:nth-child(odd) { background: var(--bg-3); }
+
+  /* KPI CARDS */
+  .kpi-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .kpi {
+    background: var(--bg-3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    flex: 1; min-width: 110px;
+  }
+  .kpi-label { font-size: 10px; color: var(--text-3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+  .kpi-value { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; }
+  .kpi-g { color: var(--g-accent); }
+  .kpi-s { color: var(--s-accent); }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  /* FOOTER */
+  .page-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+
+  /* PROFILE SPLIT */
+  .profile-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 1.5rem; }
+  .profile-card {
+    background: var(--bg-3);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+  }
+  .profile-card-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+
+  @media (max-width: 600px) {
+    .doc-hero { flex-direction: column; }
+    .tab-btn { padding: 0.75rem 1.25rem; font-size: 11px; }
+    .container { padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <p class="clinic-label">Douglas Fortuna · Clínica Eccellenza</p>
+  <h1 class="site-title">Estratégia Meta Ads 2026</h1>
+  <p class="site-subtitle">Mogi Guaçu, SP &nbsp;·&nbsp; Cirurgia Plástica & Bucomaxilofacial</p>
+</header>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active-g" onclick="switchTab('g')">Dr. Guilherme Zanco</button>
+  <button class="tab-btn" id="tab-s-btn" onclick="switchTab('s')">Dra. Stephanie Prata</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB G — DR. GUILHERME ZANCO
+════════════════════════════════════════════════════════════════ -->
+<div id="panel-g" class="tab-panel active">
+<div class="container">
+
+  <div class="doc-hero doc-hero-g">
+    <div class="doc-avatar doc-avatar-g">GZ</div>
+    <div>
+      <p class="doc-spec">Cirurgia Plástica Estética e Reconstrutora</p>
+      <h2 class="doc-name">Dr. Guilherme Zanco</h2>
+      <div class="tags">
+        <span class="tag tag-g">Plástica Estética</span>
+        <span class="tag tag-g">Reconstructora</span>
+        <span class="tag tag-neutral">Mogi Guaçu / SP</span>
+        <span class="tag tag-neutral">@dr.guilhermezanco</span>
+        <span class="tag tag-neutral">2 Objetivos de campanha</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTRICAS -->
+  <div class="section">
+    <p class="section-label">Visão geral</p>
+    <div class="metrics">
+      <div class="metric">
+        <p class="metric-label">Especialidades</p>
+        <p class="metric-value metric-value-g">2</p>
+        <p class="metric-note">Plástica + Reconstrutora</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Procedimentos</p>
+        <p class="metric-value metric-value-g">20+</p>
+        <p class="metric-note">Face, corpo, mamas, tecnologias</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Dupla na clínica</p>
+        <p class="metric-value metric-value-g">2</p>
+        <p class="metric-note">Com Dra. Stephanie</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Budget sugerido</p>
+        <p class="metric-value metric-value-g">R$3k</p>
+        <p class="metric-note">Distribuído em 4 campanhas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJETIVOS -->
+  <div class="section">
+    <p class="section-label">Objetivos de campanha</p>
+    <div class="grid2">
+      <div class="card card-g">
+        <div class="tags" style="margin-bottom:10px;"><span class="tag tag-g">Objetivo 1</span></div>
+        <p class="card-title">Crescimento de seguidores</p>
+        <p class="card-sub">Ampliar autoridade e audiência qualificada no @dr.guilhermezanco</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Campanha de Reconhecimento de marca + Engajamento</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Objetivo Meta: Seguidores / Alcance</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Criativos educativos e de autoridade</span></div>
+        </div>
+      </div>
+      <div class="card card-g">
+        <div class="tags" style="margin-bottom:10px;"><span class="tag tag-g">Objetivo 2</span></div>
+        <p class="card-title">Geração de leads qualificados</p>
+        <p class="card-sub">Atrair potenciais pacientes para consulta via WhatsApp ou formulário</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Campanha de Conversão + Geração de Cadastros</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Objetivo Meta: Mensagens WhatsApp / Formulário de leads</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Criativos com procedimentos de alto ticket</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- FUNIL -->
+  <div class="section">
+    <p class="section-label">Estrutura de funil — TOFU → MOFU → BOFU</p>
+    <div class="funnel">
+      <div class="funnel-item">
+        <div class="funnel-pill pill-tofu">TOFU<br>Topo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Reconhecimento e seguidores</p>
+          <p class="card-sub">Alcançar pessoas que não conhecem o Dr. Guilherme</p>
+          <div class="tags" style="margin-bottom:10px;">
+            <span class="tag tag-g">Awareness</span>
+            <span class="tag tag-g">Seguidores</span>
+          </div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Reels educativos: "Como funciona a Remodelação Costal?", "O que muda com a blefaroplastia?"</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Carrossel: antes × depois (dentro das normas CFM)</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Público: interesse em cirurgia plástica, estética, beleza — raio ~80 km de Mogi Guaçu</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-mofu">MOFU<br>Meio</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Engajamento e nutrição</p>
+          <p class="card-sub">Aprofundar relação com quem já interagiu ou visitou o perfil</p>
+          <div class="tags" style="margin-bottom:10px;">
+            <span class="tag tag-neutral">Engajamento</span>
+            <span class="tag tag-neutral">Tráfego no site</span>
+          </div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Vídeo de bastidores da clínica e depoimentos de pacientes (com autorização)</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Conteúdo sobre diferenciais: INMODE BodyTite, LipoultraHD, Prótese R24</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Público: quem interagiu com o perfil, visitou o site, assistiu vídeos</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-bofu">BOFU<br>Fundo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Conversão em leads e consultas</p>
+          <p class="card-sub">Levar o paciente qualificado a entrar em contato</p>
+          <div class="tags" style="margin-bottom:10px;">
+            <span class="tag tag-neutral">Mensagens WhatsApp</span>
+            <span class="tag tag-neutral">Formulário de leads</span>
+          </div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-g"></span><span>CTA direto: "Agende sua consulta via WhatsApp" — (19)99762-9531</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Formulário nativo do Meta: nome, telefone, procedimento de interesse</span></div>
+            <div class="check-item"><span class="check-dot dot-g"></span><span>Público: retargeting do MOFU + Lookalike 1–3% de leads anteriores</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PROCEDIMENTOS PRIORITÁRIOS -->
+  <div class="section">
+    <p class="section-label">Procedimentos prioritários para anunciar</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Procedimento</th>
+            <th>Potencial de busca</th>
+            <th>Funil sugerido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Abdominoplastia</td><td><span class="tag tag-g" style="font-size:10px;">Alto</span></td><td>MOFU + BOFU</td></tr>
+          <tr><td>Lipoaspiração HD / LipoultraHD</td><td><span class="tag tag-g" style="font-size:10px;">Alto</span></td><td>TOFU + BOFU</td></tr>
+          <tr><td>Prótese de Mama R24</td><td><span class="tag tag-g" style="font-size:10px;">Alto</span></td><td>MOFU + BOFU</td></tr>
+          <tr><td>Mastopexia em L / ShortScar</td><td><span class="tag tag-neutral" style="font-size:10px;">Médio</span></td><td>MOFU + BOFU</td></tr>
+          <tr><td>Blefaroplastia</td><td><span class="tag tag-neutral" style="font-size:10px;">Médio</span></td><td>TOFU + BOFU</td></tr>
+          <tr><td>Bichectomia / Mentoplastia</td><td><span class="tag tag-neutral" style="font-size:10px;">Médio</span></td><td>TOFU + MOFU</td></tr>
+          <tr><td>Remodelação Costal</td><td><span class="tag" style="font-size:10px;background:rgba(80,180,140,0.1);color:#6ac4a0;border:1px solid rgba(80,180,140,0.25);">Nicho</span></td><td>TOFU — diferencial</td></tr>
+          <tr><td>BodyTite / Argoplasma (INMODE)</td><td><span class="tag" style="font-size:10px;background:rgba(80,180,140,0.1);color:#6ac4a0;border:1px solid rgba(80,180,140,0.25);">Nicho</span></td><td>TOFU — autoridade</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PÚBLICOS -->
+  <div class="section">
+    <p class="section-label">Segmentação de públicos</p>
+    <div class="grid2">
+      <div class="card">
+        <p class="card-title">Público frio — TOFU</p>
+        <p class="card-sub">Para aquisição de novos seguidores e alcance</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Mulheres 25–50 anos, Mogi Guaçu e +80 km</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Interesses: cirurgia plástica, estética corporal, beleza, saúde</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Comportamento: viagem frequente, renda acima da média (classe B)</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Amplo com Advantage+ Audience habilitado</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-title">Público morno e quente — MOFU/BOFU</p>
+        <p class="card-sub">Para engajamento e conversão</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Visitantes do site (Pixel instalado obrigatoriamente)</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Quem interagiu com o Instagram nos últimos 60–180 dias</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Quem assistiu 50%+ dos vídeos</span></div>
+          <div class="check-item"><span class="check-dot dot-g"></span><span>Lookalike 1–3% de leads e pacientes anteriores</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- FORMATOS CRIATIVOS -->
+  <div class="section">
+    <p class="section-label">Formatos criativos recomendados</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="tags" style="margin-bottom:8px;"><span class="tag tag-g">Reels / Vídeo</span></div>
+        <p class="card-title">Conteúdo educativo</p>
+        <p style="font-size:13px;color:var(--text-2);line-height:1.6;">"Mitos e verdades sobre a lipoaspiração", "Quando a blefaroplastia é indicada?", Dr. Guilherme em vídeo explicando o procedimento em 30–60s</p>
+      </div>
+      <div class="card">
+        <div class="tags" style="margin-bottom:8px;"><span class="tag tag-neutral">Carrossel</span></div>
+        <p class="card-title">Antes × depois e diferenciais</p>
+        <p style="font-size:13px;color:var(--text-2);line-height:1.6;">Resultados com autorização, diferencial da técnica, comparativo de tecnologias disponíveis na clínica</p>
+      </div>
+      <div class="card">
+        <div class="tags" style="margin-bottom:8px;"><span class="tag tag-neutral">Imagem única</span></div>
+        <p class="card-title">CTA direto para WhatsApp</p>
+        <p style="font-size:13px;color:var(--text-2);line-height:1.6;">Foto profissional do Dr. Guilherme com headline do procedimento + botão "Agendar consulta"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORÇAMENTO -->
+  <div class="section">
+    <p class="section-label">Distribuição de orçamento — exemplo R$3.000/mês</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Campanha</th><th>Objetivo</th><th>% Budget</th><th>Valor (R$3k/mês)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Seguidores / Reconhecimento</td><td>TOFU</td><td>25%</td><td>R$ 750</td></tr>
+          <tr><td>Engajamento / Nutrição</td><td>MOFU</td><td>20%</td><td>R$ 600</td></tr>
+          <tr><td>Conversão — WhatsApp / Formulário</td><td>BOFU</td><td>40%</td><td>R$ 1.200</td></tr>
+          <tr><td>Retargeting</td><td>BOFU</td><td>15%</td><td>R$ 450</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="section">
+    <p class="section-label">KPIs por objetivo</p>
+    <div class="grid2">
+      <div class="card">
+        <p class="card-title" style="margin-bottom:12px;">Seguidores — objetivo 1</p>
+        <div class="kpi-row">
+          <div class="kpi"><p class="kpi-label">Custo por seguidor</p><p class="kpi-value kpi-g">R$0,50–1,50</p></div>
+          <div class="kpi"><p class="kpi-label">Alcance mensal</p><p class="kpi-value kpi-g">50–100k</p></div>
+          <div class="kpi"><p class="kpi-label">Taxa engajamento</p><p class="kpi-value kpi-g">&gt;3%</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-title" style="margin-bottom:12px;">Leads — objetivo 2</p>
+        <div class="kpi-row">
+          <div class="kpi"><p class="kpi-label">CPL alvo</p><p class="kpi-value kpi-g">R$30–80</p></div>
+          <div class="kpi"><p class="kpi-label">Taxa de conversão</p><p class="kpi-value kpi-g">&gt;15%</p></div>
+          <div class="kpi"><p class="kpi-label">CTR mínimo</p><p class="kpi-value kpi-g">1,5%</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- CFM -->
+  <div class="section">
+    <p class="section-label">Conformidade CFM — atenção obrigatória</p>
+    <div class="alert alert-amber" style="margin-bottom:16px;">
+      Publicidade médica no Brasil é regulada pelo CFM (Resolução 2.336/2023). Todos os criativos devem ser validados antes de veicular.
+    </div>
+    <div class="card">
+      <div class="checklist">
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Antes × depois: permitido apenas com autorização expressa do paciente e sem promessa de resultado</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Proibido usar termos como "melhor cirurgião", "resultado garantido", "o mais indicado"</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Depoimentos de pacientes: só com autorização por escrito, sem menção a valores</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Não é permitido anunciar preços de procedimentos cirúrgicos</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>CRM do médico deve constar em todo material publicitário</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Proibido induzir desnecessidade de cirurgia — foco em informação e esclarecimento</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST TÉCNICO -->
+  <div class="section">
+    <p class="section-label">Checklist técnico</p>
+    <div class="card">
+      <div class="checklist">
+        <div class="check-item"><span class="check-dot dot-g"></span><span>Pixel do Meta instalado e verificado no site clinicaeccellenza.com</span></div>
+        <div class="check-item"><span class="check-dot dot-g"></span><span>API de Conversões configurada (server-side) para rastreabilidade pós-iOS 14</span></div>
+        <div class="check-item"><span class="check-dot dot-g"></span><span>WhatsApp Business vinculado ao Business Manager</span></div>
+        <div class="check-item"><span class="check-dot dot-g"></span><span>Página do Facebook ativa e vinculada ao Instagram @dr.guilhermezanco</span></div>
+        <div class="check-item"><span class="check-dot dot-g"></span><span>UTMs configuradas para rastrear tráfego por campanha no Analytics</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB S — DRA. STEPHANIE PRATA ZANCO
+════════════════════════════════════════════════════════════════ -->
+<div id="panel-s" class="tab-panel">
+<div class="container">
+
+  <div class="doc-hero doc-hero-s">
+    <div class="doc-avatar doc-avatar-s">SP</div>
+    <div>
+      <p class="doc-spec">Cirurgia Bucomaxilofacial</p>
+      <h2 class="doc-name">Dra. Stephanie Prata Zanco</h2>
+      <div class="tags">
+        <span class="tag tag-s">Bucomaxilofacial</span>
+        <span class="tag tag-s">Estética Facial</span>
+        <span class="tag tag-neutral">Mogi Guaçu / SP</span>
+        <span class="tag tag-neutral">CFM + CFO</span>
+        <span class="tag tag-neutral">2 Perfis de paciente</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-s" style="margin-bottom:2rem;">
+    Bucomaxilo exige estratégia diferente da plástica. Grande parte do público não sabe o que é a especialidade e não se reconhece como potencial paciente — o trabalho de topo de funil é principalmente educativo e de criação de consciência de problema.
+  </div>
+
+  <!-- MÉTRICAS -->
+  <div class="section">
+    <p class="section-label">Visão geral</p>
+    <div class="metrics">
+      <div class="metric">
+        <p class="metric-label">Eixo estético</p>
+        <p class="metric-value metric-value-s">Alta</p>
+        <p class="metric-note">Bichectomia, mentoplastia</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Eixo funcional</p>
+        <p class="metric-value metric-value-s">Alta</p>
+        <p class="metric-note">Ortognática, cirurgia oral</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Ticket ortognática</p>
+        <p class="metric-value metric-value-s">Alto</p>
+        <p class="metric-note">Ciclo de decisão longo</p>
+      </div>
+      <div class="metric">
+        <p class="metric-label">Budget sugerido</p>
+        <p class="metric-value metric-value-s">R$2,5k</p>
+        <p class="metric-note">Distribuído em 5 campanhas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 PERFIS -->
+  <div class="section">
+    <p class="section-label">2 perfis de paciente — estratégias distintas</p>
+    <div class="grid2">
+      <div class="card card-s">
+        <div class="tags" style="margin-bottom:10px;"><span class="tag tag-s">Perfil A — Estético</span></div>
+        <p class="card-title">Busca resultado visual na face</p>
+        <p class="card-sub">Já tem intenção, compara opções, decide mais rápido</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Mulheres 18–40 anos interessadas em harmonização facial</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Conhece bichectomia e mentoplastia — busca quem faz bem</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Compara com procedimentos não-cirúrgicos (fios, preenchimento)</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Ciclo de decisão: 2–8 semanas</span></div>
+        </div>
+      </div>
+      <div class="card" style="border-left:2px solid #6a9fd4;">
+        <div class="tags" style="margin-bottom:10px;"><span class="tag" style="background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Perfil B — Funcional</span></div>
+        <p class="card-title">Tem problema, não sabe a solução</p>
+        <p class="card-sub">Precisa ser educado antes de ser convertido</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Dor na ATM, mordida alterada, queixo retraído, apneia</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Muitas vezes vem indicado por ortodontista ou dentista</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Público mais amplo em faixa etária: 15–50 anos</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Ciclo de decisão: 2–12 meses (longo)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- FUNIL ESTÉTICO -->
+  <div class="section">
+    <p class="section-label">Funil — eixo estético (bichectomia + mentoplastia)</p>
+    <div class="funnel">
+      <div class="funnel-item">
+        <div class="funnel-pill pill-tofu-s">TOFU<br>Topo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Despertar desejo e mostrar resultados</p>
+          <p class="card-sub">Público ainda na fase de descoberta ou comparação</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-s">Reconhecimento</span><span class="tag tag-s">Seguidores</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Reels: "Bichectomia vs preenchimento — qual é a diferença?" / "Quem pode fazer bichectomia?"</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Vídeo da Dra. Stephanie explicando a mentoplastia — rosto, autoridade, didática</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Público: mulheres 18–40, interesse em harmonização facial, estética — Mogi Guaçu +80km</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-mofu">MOFU<br>Meio</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Construir confiança e diferenciar a Dra. Stephanie</p>
+          <p class="card-sub">Quem já conhece o procedimento — agora escolhe o médico</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-neutral">Engajamento</span><span class="tag tag-neutral">Tráfego no site</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Carrossel de resultados (com autorização) + credenciais CRO da especialidade</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Vídeo: "O que esperar da recuperação após a bichectomia" — elimina objeção</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Público: retargeting de quem assistiu vídeos do TOFU + visitantes do site</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-bofu">BOFU<br>Fundo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Converter em consulta</p>
+          <p class="card-sub">Paciente pronto para decidir — empurrar para o contato</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-neutral">Mensagens</span><span class="tag tag-neutral">Formulário</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-s"></span><span>CTA: "Agende sua avaliação de bichectomia" + WhatsApp direto com mensagem pré-preenchida</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Formulário nativo: nome, telefone, procedimento de interesse, cidade</span></div>
+            <div class="check-item"><span class="check-dot dot-s"></span><span>Público: quem interagiu no MOFU + Lookalike de pacientes anteriores</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNIL FUNCIONAL -->
+  <div class="section">
+    <p class="section-label">Funil — eixo funcional (ortognática + cirurgia oral)</p>
+    <div class="funnel">
+      <div class="funnel-item">
+        <div class="funnel-pill" style="background:rgba(106,159,212,0.1);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">TOFU<br>Topo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Criar consciência do problema — não do procedimento</p>
+          <p class="card-sub">A maioria não sabe que tem indicação para cirurgia ortognática</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-neutral">Alcance</span><span class="tag tag-neutral">Seguidores</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Reels: "Você tem queixo retraído? Pode ser indicação para cirurgia ortognática" — fala com o sintoma</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>"Dor na mandíbula toda manhã? Saiba o que pode causar isso" — entrada pelo problema</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Público amplo: 15–50 anos, sem filtro rígido — Advantage+ Audience</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-mofu">MOFU<br>Meio</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Educar e construir autoridade técnica</p>
+          <p class="card-sub">Ciclo longo — nutrição constante é fundamental</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-neutral">Engajamento</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Série: "Como funciona a ortognática?", "Quanto tempo dura a recuperação?", "Preciso usar aparelho antes?"</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Carrossel educativo: "5 sinais de que você pode precisar de ortognática"</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Público: quem assistiu 50%+ dos vídeos do TOFU + visitou a página de ortognática</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-item">
+        <div class="funnel-pill pill-bofu">BOFU<br>Fundo</div>
+        <div class="card" style="margin:0;">
+          <p class="card-title">Avaliação como oferta de entrada</p>
+          <p class="card-sub">Reduzir a barreira de decisão com uma primeira consulta</p>
+          <div class="tags" style="margin-bottom:10px;"><span class="tag tag-neutral">Mensagens</span><span class="tag tag-neutral">Formulário</span></div>
+          <div class="checklist">
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Ângulo: "Agende uma avaliação para saber se você tem indicação" — baixa fricção</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Formulário: nome, telefone, cidade, "qual é o seu principal incômodo?"</span></div>
+            <div class="check-item"><span class="check-dot dot-blue"></span><span>Público: quem interagiu no MOFU + ortodontistas da região como audiência de influência</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PROCEDIMENTOS -->
+  <div class="section">
+    <p class="section-label">Procedimentos e inteligência de campanha</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Procedimento</th><th>Tipo de demanda</th><th>Ângulo criativo principal</th><th>Funil</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bichectomia</td><td><span class="tag tag-s" style="font-size:10px;">Estética</span></td><td>Face mais definida, resultado visual</td><td>TOFU → BOFU direto</td></tr>
+          <tr><td>Mentoplastia</td><td><span class="tag tag-s" style="font-size:10px;">Estética</span></td><td>Harmonia do terço inferior, perfil</td><td>TOFU → BOFU direto</td></tr>
+          <tr><td>Cirurgia Ortognática</td><td><span class="tag" style="font-size:10px;background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Funcional</span></td><td>Sintoma do paciente (dor, mordida, estética)</td><td>TOFU longo → MOFU → BOFU</td></tr>
+          <tr><td>Cirurgia Oral (sisos, implante)</td><td><span class="tag" style="font-size:10px;background:rgba(80,180,140,0.1);color:#6ac4a0;border:1px solid rgba(80,180,140,0.25);">Mista</span></td><td>Dor, urgência, indicação odontológica</td><td>BOFU direto</td></tr>
+          <tr><td>Patologia Bucal / Lesões</td><td><span class="tag" style="font-size:10px;background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Funcional</span></td><td>Prevenção, diagnóstico rápido</td><td>TOFU → BOFU</td></tr>
+          <tr><td>Traumas da Face</td><td><span class="tag tag-neutral" style="font-size:10px;">Urgência</span></td><td>Disponibilidade, especialidade específica</td><td>BOFU direto</td></tr>
+          <tr><td>Reconstrução e Enxertia</td><td><span class="tag" style="font-size:10px;background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Funcional</span></td><td>Sequela, referência de dentista</td><td>MOFU → BOFU</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DIFERENCIAIS -->
+  <div class="section">
+    <p class="section-label">Diferenciais estratégicos</p>
+    <div class="grid2">
+      <div class="card card-s">
+        <p class="card-title">Parceria com a rede odontológica</p>
+        <p class="card-sub">A maioria dos casos funcionais chega por indicação</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Conteúdo específico para ortodontistas e dentistas — maiores indicadores de ortognática</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Anúncio segmentado por cargo no Meta (interesse em odontologia)</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>"Como identificar indicação de ortognática no seu paciente" — posiciona como referência regional</span></div>
+        </div>
+      </div>
+      <div class="card card-s">
+        <p class="card-title">Bucomaxilo como estética facial definitiva</p>
+        <p class="card-sub">Compete diretamente com harmonização não-cirúrgica</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Posicionar bichectomia e mentoplastia como solução definitiva vs temporária</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Ângulo: "resultado permanente, por especialista em estrutura facial"</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Mesma linguagem e formato dos criadores de conteúdo estético — competir no mesmo espaço</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PÚBLICOS -->
+  <div class="section">
+    <p class="section-label">Segmentação de públicos</p>
+    <div class="grid2">
+      <div class="card">
+        <p class="card-title">Público estético — Perfil A</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Mulheres 18–40, Mogi Guaçu + raio 80km</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Interesses: harmonização facial, estética, cirurgia plástica</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Comportamento: engajamento com conteúdo de rosto/face no Instagram</span></div>
+          <div class="check-item"><span class="check-dot dot-s"></span><span>Lookalike de leads de bichectomia (quando houver histórico)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-title">Público funcional — Perfil B</p>
+        <div class="checklist">
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Amplo, 15–50 anos, sem filtro rígido — Advantage+ Audience</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Dentistas e ortodontistas da região: segmentação por cargo/interesse profissional</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Interesse em saúde bucal, ortodontia, dor orofacial</span></div>
+          <div class="check-item"><span class="check-dot dot-blue"></span><span>Retargeting de visitantes das páginas de ortognática no site</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ORÇAMENTO -->
+  <div class="section">
+    <p class="section-label">Distribuição de orçamento — exemplo R$2.500/mês</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Campanha</th><th>Eixo</th><th>% Budget</th><th>Valor (R$2,5k/mês)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Seguidores / Reconhecimento (estético)</td><td><span class="tag tag-s" style="font-size:10px;">Estético</span></td><td>20%</td><td>R$ 500</td></tr>
+          <tr><td>Conversão bichectomia + mentoplastia</td><td><span class="tag tag-s" style="font-size:10px;">Estético</span></td><td>30%</td><td>R$ 750</td></tr>
+          <tr><td>Educação e autoridade (ortognática)</td><td><span class="tag" style="font-size:10px;background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Funcional</span></td><td>20%</td><td>R$ 500</td></tr>
+          <tr><td>Conversão ortognática / cirurgia oral</td><td><span class="tag" style="font-size:10px;background:rgba(106,159,212,0.12);color:#6a9fd4;border:1px solid rgba(106,159,212,0.25);">Funcional</span></td><td>20%</td><td>R$ 500</td></tr>
+          <tr><td>Retargeting geral</td><td><span class="tag tag-neutral" style="font-size:10px;">Todos</span></td><td>10%</td><td>R$ 250</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="section">
+    <p class="section-label">KPIs por eixo</p>
+    <div class="grid2">
+      <div class="card">
+        <p class="card-title" style="margin-bottom:12px;">Eixo estético — bichectomia / mentoplastia</p>
+        <div class="kpi-row">
+          <div class="kpi"><p class="kpi-label">CPL alvo</p><p class="kpi-value kpi-s">R$25–60</p></div>
+          <div class="kpi"><p class="kpi-label">CTR mínimo</p><p class="kpi-value kpi-s">1,8%</p></div>
+          <div class="kpi"><p class="kpi-label">Custo por seguidor</p><p class="kpi-value kpi-s">R$0,50–1,20</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-title" style="margin-bottom:12px;">Eixo funcional — ortognática</p>
+        <div class="kpi-row">
+          <div class="kpi"><p class="kpi-label">CPL alvo</p><p class="kpi-value" style="color:#6a9fd4;">R$60–120</p></div>
+          <div class="kpi"><p class="kpi-label">Conv. em consulta</p><p class="kpi-value" style="color:#6a9fd4;">&gt;20%</p></div>
+          <div class="kpi"><p class="kpi-label">Ciclo médio</p><p class="kpi-value" style="color:#6a9fd4;">60–90d</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- CFM + CFO -->
+  <div class="section">
+    <p class="section-label">Conformidade CFM + CFO — atenção dupla</p>
+    <div class="alert alert-amber" style="margin-bottom:12px;">
+      Dra. Stephanie responde ao CFM e ao CFO dependendo do tipo de procedimento. Verifique qual conselho regula cada ato anunciado antes de veicular.
+    </div>
+    <div class="card">
+      <div class="checklist">
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Antes × depois com autorização expressa do paciente — obrigatório nos dois conselhos</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Não usar termos como "melhor especialista", "resultado perfeito", "harmonização garantida"</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Proibido mencionar preço de procedimentos cirúrgicos nos anúncios</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>CRM e/ou CRO da profissional deve constar no material publicitário</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Depoimentos de pacientes: apenas com autorização formal por escrito</span></div>
+        <div class="check-item"><span class="check-dot dot-neutral"></span><span>Conteúdo educativo para dentistas: permitido e recomendado — não configura publicidade direta ao paciente</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer class="page-footer">
+  Douglas Fortuna · Estratégia Meta Ads — Clínica Eccellenza · Mogi Guaçu, SP · 2025
+</footer>
+
+<script>
+  function switchTab(tab) {
+    document.getElementById('panel-g').classList.remove('active');
+    document.getElementById('panel-s').classList.remove('active');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-g','active-s'));
+    if (tab === 'g') {
+      document.getElementById('panel-g').classList.add('active');
+      document.querySelectorAll('.tab-btn')[0].classList.add('active-g');
+    } else {
+      document.getElementById('panel-s').classList.add('active');
+      document.querySelectorAll('.tab-btn')[1].classList.add('active-s');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
